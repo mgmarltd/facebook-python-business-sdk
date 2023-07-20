@@ -392,13 +392,15 @@ class Event(object):
 
         if self.action_source is not None:
             self.validate_action_source(self.action_source)
-            normalized_payload['action_source'] = self.action_source.value
+            # no value coming from str data removed value from action_source
+            normalized_payload['action_source'] = self.action_source
 
         normalized_payload = {k: v for k, v in normalized_payload.items() if v is not None}
         return normalized_payload
 
     def validate_action_source(self, action_source):
-        if not type(action_source) == ActionSource:
+        # no value coming from str data removed value from action_source
+        if not type(action_source) == "str":
             raise TypeError(
                 'action_source must be an ActionSource. TypeError on value: %s' % action_source
             )
